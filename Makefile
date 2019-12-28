@@ -16,7 +16,6 @@ fontopen:
 		${FONTELLO_HOST}
 	@echo "Open ${FONTELLO_HOST}/`cat .fontello` using your browser"
 
-
 fontsave:
 	@if test ! `which unzip` ; then \
 		echo 'Install unzip first.' >&2 ; \
@@ -34,5 +33,14 @@ fontsave:
 	mv `find ./.fontello.src -maxdepth 1 -name 'fontello-*'` ${FONT_DIR}
 	rm -rf .fontello.src .fontello.zip
 
-.PHONY: help fontopen fontsave
+deploy:
+	git branch -D gh-pages
+	git checkout --orphan gh-pages
+	git rm -rf --cached .
+	cp -r src/README.txt src/css src/font ./
+	git add README.txt css font
+	git commit -m "Update font assets `date`"
+	git push -f origin gh-pages
+
+.PHONY: help fontopen fontsave deploy
 .SILENT: help
