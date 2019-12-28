@@ -34,13 +34,11 @@ fontsave:
 	rm -rf .fontello.src .fontello.zip
 
 deploy:
-	git branch -D gh-pages
-	git checkout --orphan gh-pages
-	git rm -rf --cached .
+	git checkout gh-pages
 	cp -r src/README.txt src/css src/font ./
 	git add README.txt css font
 	git commit -m "Update font assets `date`"
-	git push -f origin gh-pages
+	git push origin gh-pages
 
 .PHONY: help fontopen fontsave deploy
 .SILENT: help
